@@ -1,0 +1,202 @@
+{
+    "array": [
+        {
+            "id": 0,
+            "name": "getStudentGradeData",
+            "area": "grades",
+            "coreTable": "PGFinal",
+            "description": "Get student term grades",
+            "flattened": false,
+            "com": "com",
+            "org": "cristoreyrichmond",
+            "product": "powerschool",
+            "queryName": "com.cristoreyrichmond.powerschool.grades.getStudentGradeData",
+            "queryItems": [
+                {
+                    "name": "StudentID",
+                    "table": "STUDENTS",
+                    "field": "ID",
+                    "access": "ViewOnly",
+                    "column": "STUDENTS.ID"
+                },
+                {
+                    "name": "StudentName",
+                    "table": "STUDENTS",
+                    "field": "LASTFIRST",
+                    "access": "ViewOnly",
+                    "column": "STUDENTS.LASTFIRST"
+                },
+                {
+                    "name": "Grades",
+                    "table": "PGFINAL",
+                    "field": "GRADE",
+                    "access": "ViewOnly",
+                    "column": "PGFINAL.GRADE"
+                }
+            ],
+            "queryArgs": [
+                {
+                    "name": "studentID",
+                    "column": "student.id",
+                    "defaultValue": 0,
+                    "description": "Student ID to be queried",
+                    "type": "primitive",
+                    "required": "true"
+                }
+            ],
+            "sqlQuery": "\t\t\t<![CDATA[\nPretend this SQL Query data\n\t\t\t]]>\n"
+        },
+        {
+            "id": 1,
+            "name": "getStudentAttendanceData",
+            "area": "attendance",
+            "coreTable": "Attendance",
+            "description": "Get student attendance data",
+            "flattened": false,
+            "com": "com",
+            "org": "cristoreyrichmond",
+            "product": "powerschool",
+            "queryName": "com.cristoreyrichmond.powerschool.attendance.getStudentAttendanceData",
+            "queryItems": [
+                {
+                    "name": "StudentID",
+                    "table": "STUDENTS",
+                    "field": "ID",
+                    "access": "ViewOnly",
+                    "column": "STUDENTS.ID"
+                },
+                {
+                    "name": "StudentName",
+                    "table": "STUDENTS",
+                    "field": "LASTFIRST",
+                    "access": "ViewOnly",
+                    "column": "STUDENTS.LASTFIRST"
+                },
+                {
+                    "name": "Absences",
+                    "table": "ATTENDANCE",
+                    "field": "ABS",
+                    "access": "ViewOnly",
+                    "column": "ATTENDANCE.ABS"
+                }
+            ],
+            "queryArgs": [
+                {
+                    "name": "Term",
+                    "column": "Attendance.Date",
+                    "defaultValue": "Q1",
+                    "description": "Term to check attendance on",
+                    "type": "primitive",
+                    "required": "true"
+                }
+            ],
+            "sqlQuery": "\t\t\t<![CDATA[\nPretend this SQL Query data\n\t\t\t]]>\n"
+        },
+        {
+            "id": 2,
+            "name": "getStudentAddress",
+            "area": "demographics",
+            "coreTable": "students",
+            "description": "Get the students home address",
+            "flattened": false,
+            "com": "com",
+            "org": "cristoreyrichmond",
+            "product": "powerschool",
+            "queryName": "com.cristoreyrichmond.powerschool.demographics.getStudentAddress",
+            "queryItems": [
+                {
+                    "name": "Street",
+                    "table": "STUDENTS",
+                    "field": "STREET",
+                    "access": "ViewOnly",
+                    "column": "STUDENTS.STREET"
+                },
+                {
+                    "name": "City",
+                    "table": "STUDENTS",
+                    "field": "CITY",
+                    "access": "ViewOnly",
+                    "column": "STUDENTS.CITY"
+                },
+                {
+                    "name": "State",
+                    "table": "STUDENTS",
+                    "field": "STATE",
+                    "access": "ViewOnly",
+                    "column": "STUDENTS.STATE"
+                },
+                {
+                    "name": "Zip",
+                    "table": "STUDENTS",
+                    "field": "ZIP",
+                    "access": "ViewOnly",
+                    "column": "STUDENTS.ZIP"
+                }
+            ],
+            "queryArgs": [],
+            "sqlQuery": "\t\t\t<![CDATA[\nPretend this SQL Query data\n\t\t\t]]>\n"
+        }
+    ],
+    "items": [
+        {
+            "name": "StudentID",
+            "table": "STUDENTS",
+            "field": "ID",
+            "access": "ViewOnly",
+            "column": "STUDENTS.ID"
+        },
+        {
+            "name": "StudentName",
+            "table": "STUDENTS",
+            "field": "LASTFIRST",
+            "access": "ViewOnly",
+            "column": "STUDENTS.LASTFIRST"
+        },
+        {
+            "name": "Grades",
+            "table": "PGFINAL",
+            "field": "GRADE",
+            "access": "ViewOnly",
+            "column": "PGFINAL.GRADE"
+        },
+        {
+            "name": "Absences",
+            "table": "ATTENDANCE",
+            "field": "ABS",
+            "access": "ViewOnly",
+            "column": "ATTENDANCE.ABS"
+        },
+        {
+            "name": "Street",
+            "table": "STUDENTS",
+            "field": "STREET",
+            "access": "ViewOnly",
+            "column": "STUDENTS.STREET"
+        },
+        {
+            "name": "City",
+            "table": "STUDENTS",
+            "field": "CITY",
+            "access": "ViewOnly",
+            "column": "STUDENTS.CITY"
+        },
+        {
+            "name": "State",
+            "table": "STUDENTS",
+            "field": "STATE",
+            "access": "ViewOnly",
+            "column": "STUDENTS.STATE"
+        },
+        {
+            "name": "Zip",
+            "table": "STUDENTS",
+            "field": "ZIP",
+            "access": "ViewOnly",
+            "column": "STUDENTS.ZIP"
+        }
+    ],
+    "name": "test1",
+    "jsonFilePath": "test1.json",
+    "queriesXMLFilePath": "test1.queries.xml",
+    "versionNumber": 0
+}

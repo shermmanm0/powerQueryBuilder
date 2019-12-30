@@ -1,0 +1,35 @@
+<queries>
+	<query name = "com.cristoreyrichmond.powerschool.grades.getStudentGradeData" coreTable = "PGFinal" flattened = "false">
+		<description>Get student term grades</description>
+		<args>
+			<arg name="studentID" column="student.id" type ="primitive" required ="true" />
+		</args>
+		<columns>
+			<column column=STUDENTS.ID>StudentID</column>
+			<column column=STUDENTS.LASTFIRST>StudentName</column>
+			<column column=PGFINAL.GRADE>Grades</column>
+		</columns>
+	</query>
+	<query name = "com.cristoreyrichmond.powerschool.attendance.getStudentAttendanceData" coreTable = "Attendance" flattened = "false">
+		<description>Get student attendance data</description>
+		<args>
+			<arg name="Term" column="Attendance.Date" type ="primitive" required ="true" />
+		</args>
+		<columns>
+			<column column=STUDENTS.ID>StudentID</column>
+			<column column=STUDENTS.LASTFIRST>StudentName</column>
+			<column column=PGFINAL.GRADE>Grades</column>
+		</columns>
+	</query>
+	<query name = "com.cristoreyrichmond.powerschool.demographics.getStudentAddress" coreTable = "students" flattened = "false">
+		<description>Get the students home address</description>
+		<args>
+		</args>
+		<columns>
+			<column column=STUDENTS.STREET>Street</column>
+			<column column=STUDENTS.CITY>City</column>
+			<column column=STUDENTS.STATE>State</column>
+			<column column=STUDENTS.ZIP>Zip</column>
+		</columns>
+	</query>
+</queries>

@@ -1,0 +1,26 @@
+{
+  "name": "crrhs-powerschool-bridge",
+  "version": "1.0.0",
+  "description": "Data Bridge between CRRHS and PowerSchool",
+  "main": "app.js",
+  "dependencies": {
+    "line-reader": "^0.4.0",
+    "lodash": "^4.17.15",
+    "xmlbuilder": "^13.0.2",
+    "yargs": "^15.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shermmanm0/crrhs-powerschool-bridge.git"
+  },
+  "author": "Matthew Sherman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shermmanm0/crrhs-powerschool-bridge/issues"
+  },
+  "homepage": "https://github.com/shermmanm0/crrhs-powerschool-bridge#readme"
+}
