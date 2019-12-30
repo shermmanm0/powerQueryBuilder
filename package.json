@@ -1,11 +1,14 @@
 {
-  "name": "crrhs-powerschool-bridge",
-  "version": "1.0.0",
+  "name": "power-query-builder",
+  "version": "0.0.1",
   "description": "Data Bridge between CRRHS and PowerSchool",
   "main": "app.js",
   "dependencies": {
+    "console-menu": "^0.1.0",
     "line-reader": "^0.4.0",
     "lodash": "^4.17.15",
+    "prompts": "^2.3.0",
+    "terminal-kit": "^1.32.2",
     "xmlbuilder": "^13.0.2",
     "yargs": "^15.0.2"
   },
@@ -22,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/shermmanm0/crrhs-powerschool-bridge/issues"
   },
-  "homepage": "https://github.com/shermmanm0/crrhs-powerschool-bridge#readme"
+  "homepage": "https://github.com/shermmanm0/crrhs-powerschool-bridge#readme",
+  "keywords": [
+    "power-school"
+  ]
 }
