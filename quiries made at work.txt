@@ -1,0 +1,28 @@
+Select all assignments based on teacher ID
+
+select ascore.scorepercent, s.id as studentID, asec.name, sec.external_expression,a.assignmentid, udef.workstudyday, tb.storecode, tc.name
+from assignmentscore ascore
+join students s on ascore.studentsdcid = s.dcid
+join assignmentsection asec on ascore.assignmentsectionid = asec.assignmentsectionid
+join sections sec on asec.sectionsdcid = sec.dcid
+join assignment a on asec.assignmentid = a.assignmentid
+join u_def_ext_students udef on s.dcid = udef.studentsdcid
+join termbins tb on asec.duedate > tb.date1 and asec.duedate < tb.date2
+join AssignmentCategoryAssoc aca on asec.assignmentsectionid = aca.assignmentsectionid
+join teachercategory tc on aca.teachercategoryid = tc.teachercategoryid
+where sec.teacher = :teacherid and tb.storecode like 'Q%' and s.enroll_status = 0
+
+select all assignments from all teachers
+
+select ascore.scorepercent, s.id as studentID, asec.name, sec.external_expression,a.assignmentid, udef.workstudyday, tb.storecode, tc.name, u.last_name
+from assignmentscore ascore
+join students s on ascore.studentsdcid = s.dcid
+join assignmentsection asec on ascore.assignmentsectionid = asec.assignmentsectionid
+join sections sec on asec.sectionsdcid = sec.dcid
+join assignment a on asec.assignmentid = a.assignmentid
+join u_def_ext_students udef on s.dcid = udef.studentsdcid
+join termbins tb on asec.duedate > tb.date1 and asec.duedate < tb.date2
+join AssignmentCategoryAssoc aca on asec.assignmentsectionid = aca.assignmentsectionid
+join teachercategory tc on aca.teachercategoryid = tc.teachercategoryid
+join users u on sec.teacher = u.dcid
+where tb.storecode like 'Q%' and s.enroll_status = 0
