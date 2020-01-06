@@ -1,0 +1,11 @@
+select
+s.id, 
+s.lastfirst,
+sxt.workstudydayid
+from students s
+inner join U_DEF_EXT_STUDENTS sxt 
+on 
+s.dcid = sxt.studentsdcid
+where
+s.enroll_status = 0
+order by s.last_name

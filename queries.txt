@@ -1,13 +1,76 @@
-Select all assignments based on teacher ID
+select all teachers with gradebooks
 
-select ascore.scorepercent, s.id as studentID, asec.name, sec.external_expression,a.assignmentid, udef.workstudyday, tb.storecode, tc.name
-from assignmentscore ascore
-join students s on ascore.studentsdcid = s.dcid
-join assignmentsection asec on ascore.assignmentsectionid = asec.assignmentsectionid
-join sections sec on asec.sectionsdcid = sec.dcid
-join assignment a on asec.assignmentid = a.assignmentid
-join u_def_ext_students udef on s.dcid = udef.studentsdcid
-join termbins tb on asec.duedate > tb.date1 and asec.duedate < tb.date2
-join AssignmentCategoryAssoc aca on asec.assignmentsectionid = aca.assignmentsectionid
-join teachercategory tc on aca.teachercategoryid = tc.teachercategoryid
-where sec.teacher = :teacherid and tb.storecode like 'Q%' and s.enroll_status = 0
+select u.lastFirst, 
+u.dcid 
+from users u
+where u.title = 'Teacher'
+order by lastfirst
+
+select all periods teacher has taken attendance
+
+select sec.external_expression, 
+ataken.att_date
+from attendance_taken ataken
+inner join sections sec on sec.id = ataken.sectionid
+inner join teachers teach on teach.id = sec.teacher
+where teach.id = :teacherid
+
+
+select all teacher period sections
+select sec.id, c.course_name, sec.external_expression
+from sections sec
+inner join users u on sec.teacher = u.dcid
+inner join courses c on sec.course_number = c.course_number  
+where u.dcid = :teacherid
+
+
+pulls all section meetings based on cycle day
+select sec_meet.dcid, c.course_name, sec.external_expression, sec_meet.cycle_day_letter
+from section_meeting sec_meet
+inner join sections sec on sec_meet.sectionid = sec.id
+inner join courses c on sec.course_number = c.course_number
+where sec.teacher = :teacherid
+
+
+selects all periods and dates when a teacher's courses meet
+select cal_day.date_value, c.course_name, sec.external_expression
+from calendar_day cal_day
+inner join cycle_day cyc_day on cal_day.cycle_day_id = cyc_day.id
+inner join section_meeting sec_meet on cyc_day.letter = sec_meet.cycle_day_letter
+inner join sections sec on sec_meet.sectionid = sec.id
+inner join courses c on sec.course_number = c.course_number
+inner join users u on sec.teacher = u.dcid
+where u.dcid = :teacherid
+and cal_day.date_value > '18-AUG-19'
+
+
+select all grades from a specified term for a specified student
+
+select pg.percent, c.course, pg.lastgradeupdate
+from pgfinalgrades pg
+where 
+pg.finalgradename = :term
+and
+pg.studentid = :studentid
+
+selects a specific grade from a specific term for a specific student
+
+select pg.percent, pg.lastgradeupdate
+from pgfinalgrades pg
+inner join sections sec on pg.sectionid = sec.id
+where 
+pg.finalgradename = :term
+and
+pg.studentid = :studentid
+and
+pg.sectionid = :sectionid
+
+selects all students in a specific class period
+
+
+
+
+
+
+
+
