@@ -1,6 +1,26 @@
 const fs = require('fs');
-const argv = require('yargs').argv;
-import Plugin from './powerQuery';
+const yargs = require('yargs');
+const plugin = require ('./powerQuery');
+const Plugin = plugin.Plugin;
 
+
+
+yargs
+  .command({
+    command: 'new',
+    describe: 'Create a new Plugin Object',
+    builder: {
+      name: {
+          describe: 'Plugin Name',
+          demandOption: true,
+          type: 'string'
+      }
+  },
+  handler(argv) {
+    var newPlugin = new Plugin(argv.name);
+      
+  }
+})
+console.log(yargs.argv);
 
 

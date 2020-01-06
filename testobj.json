@@ -1,0 +1,91 @@
+[
+    {
+        "tableAbbreviation": "select",
+        "tableName": ""
+    },
+    {
+        "tableAbbreviation": "cal",
+        "fieldName": "date_value,",
+        "tableName": "calendar_day"
+    },
+    {
+        "tableAbbreviation": "cyc",
+        "fieldName": "letter,",
+        "tableName": "cycle_day"
+    },
+    {
+        "tableAbbreviation": "cal",
+        "fieldName": "a,",
+        "tableName": "calendar_day"
+    },
+    {
+        "tableAbbreviation": "cal",
+        "fieldName": "b,",
+        "tableName": "calendar_day"
+    },
+    {
+        "tableAbbreviation": "cal",
+        "fieldName": "c,",
+        "tableName": "calendar_day"
+    },
+    {
+        "tableAbbreviation": "cal",
+        "fieldName": "d,",
+        "tableName": "calendar_day"
+    },
+    {
+        "tableAbbreviation": "cal",
+        "fieldName": "e,",
+        "tableName": "calendar_day"
+    },
+    {
+        "tableAbbreviation": "cal",
+        "fieldName": "f,",
+        "tableName": "calendar_day"
+    },
+    {
+        "tableAbbreviation": "cal",
+        "fieldName": "insession,",
+        "tableName": "calendar_day"
+    },
+    {
+        "tableAbbreviation": "cal",
+        "fieldName": "schoolid,",
+        "tableName": "calendar_day"
+    },
+    {
+        "tableAbbreviation": "t",
+        "fieldName": "yearid",
+        "tableName": "terms"
+    },
+    {
+        "tableAbbreviation": "cyc",
+        "fieldName": "id",
+        "tableName": "cycle_day"
+    },
+    {
+        "tableAbbreviation": "cal",
+        "fieldName": "cycle_day_id",
+        "tableName": "calendar_day"
+    },
+    {
+        "tableAbbreviation": "sch",
+        "fieldName": "school_number",
+        "tableName": "schools"
+    },
+    {
+        "tableAbbreviation": "cal",
+        "fieldName": "schoolid",
+        "tableName": "calendar_day"
+    },
+    {
+        "tableAbbreviation": "t",
+        "fieldName": "schoolid",
+        "tableName": "terms"
+    },
+    {
+        "tableAbbreviation": "cal",
+        "fieldName": "schoolid",
+        "tableName": "calendar_day"
+    }
+]

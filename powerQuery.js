@@ -159,6 +159,9 @@ class Plugin{
 			console.log("Query name is already taken. Please rename");
 		}		
 	}
+	getPluginName(){
+		return this.name;
+	}
 
 
 
@@ -265,4 +268,11 @@ class PowerQueryArg{
 	getXML(){
 		return `\t\t\t<arg name=\"${this.name}\" column=\"${this.column}\" type =\"${this.type}\" required =\"${this.required}\" />\n`
 	}
+}
+
+module.exports = {
+	Plugin: Plugin,
+	PowerQuery: PowerQuery,
+	PowerQueryItem: PowerQueryItem,
+	PowerQueryArg, PowerQueryArg
 }
