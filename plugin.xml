@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://plugin.powerschool.pearson.com"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://plugin.powerschool.pearson.com plugin.xsd"
+		name="CRRHS Data Puller"
+		version="1.0"
+		description="Pulls all the data">
+	<oauth></oauth>
+	<access_request>
+		<field table ="ASSIGNMENT" field="ASSIGNMENTID" access = "ViewOnly" />
+		<field table ="ASSIGNMENTCATEGORYASSOC" field="ASSIGNMENTSECTIONID" access = "ViewOnly" />
+		<field table ="ASSIGNMENTCATEGORYASSOC" field="TEACHERCATEGORYID" access = "ViewOnly" />
+		<field table ="ASSIGNMENTSCORE" field="ASSIGNMENTSECTIONID" access = "ViewOnly" />
+		<field table ="ASSIGNMENTSCORE" field="SCOREPERCENT" access = "ViewOnly" />
+		<field table ="ASSIGNMENTSCORE" field="STUDENTSDCID" access = "ViewOnly" />
+		<field table ="ASSIGNMENTSECTION" field="ASSIGNMENTID" access = "ViewOnly" />
+		<field table ="ASSIGNMENTSECTION" field="ASSIGNMENTSECTIONID" access = "ViewOnly" />
+		<field table ="ASSIGNMENTSECTION" field="DUEDATE" access = "ViewOnly" />
+		<field table ="ASSIGNMENTSECTION" field="NAME" access = "ViewOnly" />
+		<field table ="ASSIGNMENTSECTION" field="SECTIONSDCID" access = "ViewOnly" />
+		<field table ="SECTIONS" field="DCID" access = "ViewOnly" />
+		<field table ="SECTIONS" field="EXTERNAL_EXPRESSION" access = "ViewOnly" />
+		<field table ="SECTIONS" field="TEACHER" access = "ViewOnly" />
+		<field table ="STUDENTS" field="DCID" access = "ViewOnly" />
+		<field table ="STUDENTS" field="ENROLL_STATUS" access = "ViewOnly" />
+		<field table ="STUDENTS" field="ID" access = "ViewOnly" />
+		<field table ="TEACHERCATEGORY" field="NAME" access = "ViewOnly" />
+		<field table ="TEACHERCATEGORY" field="TEACHERCATEGORYID" access = "ViewOnly" />
+		<field table ="TERMBINS" field="DATE1" access = "ViewOnly" />
+		<field table ="TERMBINS" field="DATE2" access = "ViewOnly" />
+		<field table ="TERMBINS" field="STORECODE" access = "ViewOnly" />
+		<field table ="U_DEF_EXT_STUDENTS" field="STUDENTSDCID" access = "ViewOnly" />
+		<field table ="U_DEF_EXT_STUDENTS" field="WORKSTUDYDAY" access = "ViewOnly" />
+		<field table ="USERS" field="DCID" access = "ViewOnly" />
+		<field table ="USERS" field="LAST_NAME" access = "ViewOnly" />
+	</access_request>
+	<publisher name ="Matthew Sherman">
+		<contact email ="msherman@cristoreyrichmond.org" />
+	</publisher>
+</plugin>

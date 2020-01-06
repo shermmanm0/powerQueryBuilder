@@ -1,11 +1,12 @@
-select
-s.id, 
-s.lastfirst,
-sxt.workstudydayid
-from students s
-inner join U_DEF_EXT_STUDENTS sxt 
-on 
-s.dcid = sxt.studentsdcid
-where
-s.enroll_status = 0
-order by s.last_name
+select ascore.scorepercent, s.id as studentID, asec.name, sec.external_expression,a.assignmentid, udef.workstudyday, tb.storecode, tc.name, u.last_name
+from assignmentscore ascore
+inner join students s on ascore.studentsdcid = s.dcid
+inner join assignmentsection asec on ascore.assignmentsectionid = asec.assignmentsectionid
+inner join sections sec on asec.sectionsdcid = sec.dcid
+inner join assignment a on asec.assignmentid = a.assignmentid
+inner join u_def_ext_students udef on s.dcid = udef.studentsdcid
+inner join termbins tb on asec.duedate > tb.date1 and asec.duedate < tb.date2
+inner join AssignmentCategoryAssoc aca on asec.assignmentsectionid = aca.assignmentsectionid
+inner join teachercategory tc on aca.teachercategoryid = tc.teachercategoryid
+inner join users u on sec.teacher = u.dcid
+where tb.storecode like 'Q%' and s.enroll_status = 0
