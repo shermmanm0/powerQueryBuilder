@@ -1,15 +1,17 @@
 //import pq from 'powerQuery.js';
 const fs = require('fs');
 const _ = require('lodash');
+const plugin = require('./powerQuery');
+const Plugin = plugin.Plugin;
 
 function getQueriesFromSQL(fileName) {
   const rawData = fs.readFileSync(fileName, 'utf8').toLowerCase();
   let fields = [];
   let tables = [];
   let args = [];
-  const fieldsRegEx = new RegExp(/[a-z_]+\.[a-z_]+/g);
+  const fieldsRegEx = new RegExp(/[a-z_0-9]+\.[a-z_0-9]+/g);
   const tablesRegEx = new RegExp(
-    /((from)\s[a-z_]+\s+[a-z_]+)|((inner join)\s[a-z_]+\s+[a-z_]+)/g
+    /((from)\s[a-z_0-9]+\s+[a-z_0-9]+)|((inner join)\s[a-z_0-9]+\s+[a-z_0-9]+)/g
   );
   const argsRegEx = new RegExp(/:[a-z_]+/g);
   fields = rawData.match(fieldsRegEx);
@@ -54,4 +56,24 @@ function getQueriesFromSQL(fileName) {
   };
 }
 
-console.log(getQueriesFromSQL('testsql2.txt'));
+var data = getQueriesFromSQL('testsql.txt');
+console.log(data.fields);
+var newPlugin = new Plugin('getAllGrades');
+newPlugin.addQuery(
+  'data_puller',
+  'assignment_grades',
+  'assignments',
+  'pulls all student grades'
+);
+
+data.fields.forEach(item => {
+  newPlugin.addItemToQuery(
+    0,
+    `${item.table}.${item.name}`,
+    item.table,
+    item.name
+  );
+});
+
+newPlugin.writeQueriesXMLToFile();
+newPlugin.writePluginXMLToFile();
