@@ -1,0 +1,57 @@
+<queries>
+	<query name = " com.cristoreyrichmond.powerschool.attendance.getAllAttendanceData" flattened = "true">
+		<description>need to write description method</description>
+		<args>
+		</args>
+		<columns>
+			<column column="ATTENDANCE.STUDENTID">attendstudentid</column>
+			<column column="STUDENTS.LASTFIRST">slastfirst</column>
+			<column column="ATTENDANCE.ATT_DATE">attendatt_date</column>
+			<column column="ATTENDANCE_CODE.ATT_CODE">attcatt_code</column>
+			<column column="SECTIONS.COURSE_NUMBER">seccourse_number</column>
+			<column column="SECTIONS.EXTERNAL_EXPRESSION">secexternal_expression</column>
+		</columns>
+		<sql>
+			<![CDATA[
+select attend.studentid, s.lastfirst, attend.att_date, attc.att_code, sec.course_number, sec.external_expression
+from attendance attend
+inner join students s on attend.studentid = s.dcid
+inner join attendance_code attc on attend.attendance_codeid = attc.id
+inner join cc sched on attend.ccid = sched.id
+inner join sections sec on sched.sectionid = sec.id
+WHERE
+attend.att_mode_code = 'ATT_ModeMeeting'
+and
+attc.att_code != 'WS'
+AND
+s.enroll_status = 0
+order by attend.att_date
+			]]>
+
+		</sql>
+	</query>
+	<query name = "com.cristoreyrichmond.powerschool.cc.getStudentScheduleData" flattened = "true">
+		<description>need to write description method</description>
+		<args>
+		</args>
+		<columns>
+			<column column="STUDENTS.LASTFIRST">slastfirst</column>
+			<column column="STUDENTS.ID">sid</column>
+			<column column="COURSES.COURSE_NAME">ccourse_name</column>
+			<column column="SECTIONS.EXTERNAL_EXPRESSION">secexternal_expression</column>
+			<column column="COURSES.COURSE_NUMBER">ccourse_number</column>
+		</columns>
+		<sql>
+			<![CDATA[
+select s.lastfirst, s.id, c.course_name, sec.external_expression, c.course_number
+from cc coursecollection
+inner join students s on coursecollection.studentid = s.id 
+inner join sections sec on coursecollection.sectionid = sec.id
+inner join courses c on sec.course_number = c.course_number
+WHERE
+s.enroll_status = 0
+			]]>
+
+		</sql>
+	</query>
+</queries>

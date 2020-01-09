@@ -2,16 +2,22 @@ const fs = require('fs');
 const _ = require('lodash');
 
 class Plugin {
-  constructor(name) {
+  constructor() {
     this.array = [];
     this.items = [];
-    this.name = name;
-    this.jsonFilePath = `${this.name}.json`;
-    this.queriesXMLFilePath = `queries_root/${this.name}.named_queries.xml`;
-    this.versionNumber = 0;
+    this.name = '';
+    this.XMLName = '';
+    this.jsonFilePath = `./pluginInfo.json`;
+    this.queriesXMLFilePath = `plugin-folder/queries_root/${this.XMLName}.named_queries.xml`;
+    this.version = 0;
+    this.subVersion = 0;
+    this.description = '';
+    this.publisherName = '';
+    this.publisherEmail = '';
+    this.loadPluginDataFromJSON()
   }
   //adds query
-  addQuery(name, area, coreTable, description, flattened = false) {
+  addQuery(name, area, coreTable, description, rawSQL, flattened = true) {
     let query = new PowerQuery(
       this.getNumberOfQueries(),
       name,
@@ -20,6 +26,7 @@ class Plugin {
       description,
       flattened
     );
+    query.setSQL(rawSQL);
     if (this.checkQueryNameForUniqueness(query.getQueryName())) {
       this.array.push(query);
       console.log('Query added with ID ' + query.getId());
@@ -54,12 +61,18 @@ class Plugin {
   addItemToQuery(index, name, table, field, access = 'ViewOnly') {
     let temp = new PowerQueryItem(name, table, field, access);
     this.array[index].addPowerQueryItem(temp);
-    console.log(this.isItemNewToPlugIn(temp));
     if (this.isItemNewToPlugIn(temp)) {
       this.items.push(temp);
-      console.log(temp.column);
     }
   }
+  addColumnToQuery(index, name, table, field, access = 'ViewOnly') {
+    let temp = new PowerQueryItem(name, table, field, access);
+    this.array[index].addPowerQueryColumn(temp);
+    if (this.isItemNewToPlugIn(temp)) {
+      this.items.push(temp);
+    }
+  }
+  
   addArgToQuery(
     index,
     name,
@@ -108,7 +121,7 @@ class Plugin {
       `\t\txsi:schemaLocation="http://plugin.powerschool.pearson.com plugin.xsd"\n`
     );
     pluginXML = pluginXML.concat(`\t\tname="CRRHS Data Puller"\n`);
-    pluginXML = pluginXML.concat(`\t\tversion="1.${this.versionNumber}"\n`);
+    pluginXML = pluginXML.concat(`\t\tversion="${this.version}.${this.subVersion}"\n`);
     pluginXML = pluginXML.concat(`\t\tdescription="Pulls all the data">\n`);
     pluginXML = pluginXML.concat(`\t<oauth></oauth>\n`);
     pluginXML = pluginXML.concat(`\t<access_request>\n`);
@@ -147,7 +160,7 @@ class Plugin {
     });
   }
   writePluginXMLToFile() {
-    fs.writeFile('plugin.xml', this.getPluginXML(), function(err) {
+    fs.writeFile('plugin-folder/plugin.xml', this.getPluginXML(), function(err) {
       if (err) {
         console.log(err);
       } else {
@@ -155,38 +168,19 @@ class Plugin {
       }
     });
   }
-  loadDataFromJSON(pathToJSON) {
+  loadPluginDataFromJSON(pathToJSON = this.jsonFilePath){
     let rawData = fs.readFileSync(pathToJSON);
     let newData = JSON.parse(rawData);
-    let currentQueryIndex = 0;
-    this.name = newData.name;
-    this.jsonFilePath = newData.jsonFilePath;
-    this.queriesXMLFilePath = newData.queriesXMLFilePath;
-
-    newData.array.forEach(element => {
-      this.addQueryFromJSON(element);
-      element.queryItems.forEach(items => {
-        this.addItemToQuery(
-          currentQueryIndex,
-          items.name,
-          items.table,
-          items.field,
-          items.access
-        );
-      });
-      element.queryArgs.forEach(args => {
-        this.addArgToQuery(
-          currentQueryIndex,
-          args.name,
-          args.column,
-          args.defaultValue,
-          args.description,
-          args.type,
-          args.required
-        );
-      });
-      currentQueryIndex++;
-    });
+    this.name = newData.plugin.name;
+    this.XMLName = this.name.replace(/ /g,'');
+    this.version = newData.plugin.version;
+    this.subVersion = newData.plugin.subVersion;
+    this.description = newData.plugin.description;
+    this.publisherName = newData.plugin.publisherName;
+    this.publisherEmail = newData.plugin.publisherEmail;
+    this.queriesXMLFilePath = `plugin-folder/queries_root/${this.XMLName}.named_queries.xml`; 
+  }
+  loadQueryDataFromJSON(pathToJSON) {
   }
   getQueryNameAtIndex(index) {
     return this.array[index].queryName;
@@ -211,6 +205,21 @@ class Plugin {
   getPluginName() {
     return this.name;
   }
+  setQuerySQL(index,sqlData){
+    this.array[index].setSQL(sqlData)
+  }
+  printPluginInfo(){
+    console.log(this.name);
+    console.log(this.XMLName);
+    console.log(this.version);
+    console.log(this.subVersion);
+    console.log(this.description);
+    console.log(this.publisherName);
+    console.log(this.publisherEmail);
+  }
+  incrementSubVersionNumber(){
+    this.subVersion++;
+  }
 }
 class PowerQuery {
   constructor(id, name, area, coreTable, description, flattened) {
@@ -223,11 +232,14 @@ class PowerQuery {
     this.com = 'com';
     this.org = 'cristoreyrichmond';
     this.product = 'powerschool';
-    this.queryName = this.com + this.org + this.product + this.area + this.name;
     this.queryName = `${this.com}.${this.org}.${this.product}.${this.area}.${this.name}`;
+    this.queryColumns = [];
     this.queryItems = [];
     this.queryArgs = [];
     this.setSQL('Pretend this SQL Query data');
+  }
+  addPowerQueryColumn(item){
+    this.queryColumns.push(item)
   }
   addPowerQueryItem(item) {
     this.queryItems.push(item);
@@ -251,10 +263,11 @@ class PowerQuery {
     return this.queryName;
   }
   getQueryXML() {
-    let xmlBodyString = `\t<query name = "${this.queryName}" coreTable = "${this.coreTable}" flattened = "${this.flattened}">\n`;
+    let xmlBodyString = `\t<query name = "${this.queryName}" flattened = "${this.flattened}">\n`;
     xmlBodyString = xmlBodyString.concat(this.getDescriptionXML());
     xmlBodyString = xmlBodyString.concat(this.getArgsXML());
     xmlBodyString = xmlBodyString.concat(this.getColumnsXML());
+    xmlBodyString = xmlBodyString.concat(this.getSQLXML());
     xmlBodyString = xmlBodyString.concat(`\t</query>\n`);
     return xmlBodyString;
   }
@@ -269,13 +282,22 @@ class PowerQuery {
     xmlString = xmlString.concat(`\t\t</args>\n`);
     return xmlString;
   }
-  getColumnsXML() {
+  getColumnsXML(){
+    let xmlString = `\t\t<columns>\n`;
+    this.queryColumns.forEach(element => {
+      xmlString = xmlString.concat(element.getXML());
+    });
+    xmlString = xmlString.concat(`\t\t</columns>\n`);
+    return xmlString;
+  }
+  getItemsXML(){
     let xmlString = `\t\t<columns>\n`;
     this.queryItems.forEach(element => {
       xmlString = xmlString.concat(element.getXML());
     });
     xmlString = xmlString.concat(`\t\t</columns>\n`);
     return xmlString;
+
   }
   getSQLXML() {
     return `\t\t<sql>\n${this.sqlQuery}\n\t\t</sql>\n`;

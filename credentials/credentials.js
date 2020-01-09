@@ -3,8 +3,8 @@ var url = require('url');
 var fs = require('fs');
 var args = process.argv.splice(2);
 var powerschoolServerUrl = "https://cristoreyrichmond.powerschool.com/";
-var id = "e534cabc-b960-44ed-b3f5-6db090b07a33";
-var secret = "f5c63bfc-e708-40bc-b21e-a7ade83d57d8";
+var id = "3b6e474d-daee-4323-850f-b5c6a341342e";
+var secret = "5524d8c0-d898-4422-a22e-75be79a889fe";
 
 var credentials = (new Buffer(id + ":" +secret)).toString('base64');
 

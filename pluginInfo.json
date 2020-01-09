@@ -1,0 +1,11 @@
+{
+    "plugin": {
+    "name":"CRRHS Data Dashboard Bridge",
+    "version":1,
+    "subVersion":0,
+    "description":"Plugin to pull data from PowerSchool into the CRRHS Data Dashboard",
+    "publisherName": "Cristo Rey Richmond High School",
+    "publisherEmail": "msherman@cristoreyrichmond.org"
+    },
+    "queries":[]
+}

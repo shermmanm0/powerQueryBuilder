@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://plugin.powerschool.pearson.com"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://plugin.powerschool.pearson.com plugin.xsd"
+		name="CRRHS Data Puller"
+		version="1.1"
+		description="Pulls all the data">
+	<oauth></oauth>
+	<access_request>
+		<field table ="ATTENDANCE" field="STUDENTID" access = "ViewOnly" />
+		<field table ="STUDENTS" field="LASTFIRST" access = "ViewOnly" />
+		<field table ="ATTENDANCE" field="ATT_DATE" access = "ViewOnly" />
+		<field table ="ATTENDANCE_CODE" field="ATT_CODE" access = "ViewOnly" />
+		<field table ="SECTIONS" field="COURSE_NUMBER" access = "ViewOnly" />
+		<field table ="SECTIONS" field="EXTERNAL_EXPRESSION" access = "ViewOnly" />
+		<field table ="STUDENTS" field="DCID" access = "ViewOnly" />
+		<field table ="ATTENDANCE" field="ATTENDANCE_CODEID" access = "ViewOnly" />
+		<field table ="ATTENDANCE_CODE" field="ID" access = "ViewOnly" />
+		<field table ="ATTENDANCE" field="CCID" access = "ViewOnly" />
+		<field table ="CC" field="ID" access = "ViewOnly" />
+		<field table ="CC" field="SECTIONID" access = "ViewOnly" />
+		<field table ="SECTIONS" field="ID" access = "ViewOnly" />
+		<field table ="ATTENDANCE" field="ATT_MODE_CODE" access = "ViewOnly" />
+		<field table ="STUDENTS" field="ENROLL_STATUS" access = "ViewOnly" />
+		<field table ="STUDENTS" field="ID" access = "ViewOnly" />
+		<field table ="COURSES" field="COURSE_NAME" access = "ViewOnly" />
+		<field table ="COURSES" field="COURSE_NUMBER" access = "ViewOnly" />
+		<field table ="CC" field="STUDENTID" access = "ViewOnly" />
+	</access_request>
+	<publisher name ="Matthew Sherman">
+		<contact email ="msherman@cristoreyrichmond.org" />
+	</publisher>
+</plugin>

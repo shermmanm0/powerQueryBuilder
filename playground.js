@@ -1,50 +1,55 @@
-var arrayOfObjects = [
-  {
-    name: 'Rose',
-    age: '5 months'
-  },
-  {
-    name: 'Wanda',
-    age: '398 months'
-  },
-  {
-    name: 'Matt',
-    age: '389 months'
-  }
-];
+var https = require('follow-redirects').https;
+var fs = require('fs');
+const _ = require('lodash')
 
-console.log(arrayOfObjects.find(element => element.name === 'Wanda').age);
-var menu = require('console-menu');
-var programRunning = true;
-menu(
-  [
-    { hotkey: 'n', title: '(n)ew plugin', selected: true, choice: 'new' },
-    { hotkey: 'e', title: '(e)dit plugin', choice: 'edit' },
-    { hotkey: 'x', title: 'e(x)it program', choice: 'exit' },
-    { separator: true },
-    { hotkey: 'h', title: '(h)elp', choice: 'help' }
-  ],
-  {
-    header: 'PowerQuery Builder',
-    border: true
-  }
-).then(item => {
-  if (item) {
-    switch (item.choice) {
-      case 'new':
-        console.log('You have chosen to create a new Plugin');
-        break;
-      case 'edit':
-        console.log('You have chosen to edit a previously created plugin');
-        break;
-      case 'exit':
-        console.log('Exiting Application.  Goodbye');
-        break;
-      case 'help':
-        console.log('Help.  I need somebody');
-        break;
+var options = {
+  'method': 'POST',
+  'hostname': 'cristoreyrichmond.powerschool.com',
+  'path': '/ws/schema/query/com.cristoreyrichmond.powerschool.attendance.getAllAttendanceData?pagesize=0',
+  'headers': {
+    'Authorization': 'Bearer c21b4ecc-0d33-4bd1-9a1f-4ab91c11e43a',
+    'Content-Type': 'application/json'
+  },
+  'maxRedirects': 20
+};
+
+function parseAttendanceData(data){
+  let attendanceDataByStudent = []
+  data.forEach(entry =>{
+    if (_.findIndex(attendanceDataByStudent,{"name":entry.slastfirst}) ===-1 ){
+      attendanceDataByStudent.push({"name":entry.slastfirst,"courses": [{"period":entry.secexternal_expression,"courseName":entry.ccourse_name,"absences":[],"tardies":[]}]});
     }
-  } else {
-    console.log('You canceled the menu.  Goodbye');
-  }
+    else{
+      attendanceDataByStudent[_.findIndex(attendanceDataByStudent,{"name":entry.slastfirst})].courses.push({"period":entry.secexternal_expression,"courseName":entry.ccourse_name,"absences":[],"tardies":[]});
+    }
+  })
+  attendanceDataByStudent = _.orderBy(attendanceDataByStudent,['name'])
+  attendanceDataByStudent.forEach(student =>{
+    student.courses = _.sortBy(student.courses, ['period'])
+  })
+  fs.writeFileSync('studentAttendanceData.json',JSON.stringify(attendanceDataByStudent))
+}
+var req = https.request(options, function (res) {
+  var chunks = [];
+
+  res.on("data", function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on("end", function (chunk) {
+    var attenanceDataObject = JSON.parse(fs.readFileSync('./studentAttendanceData.json','UTF8'))
+    var body = Buffer.concat(chunks);
+    var jsonData = JSON.parse(body).record
+    console.log(_.findIndex(attenanceDataObject,{'name': jsonData[0].slastfirst}))
+    jsonData.forEach(entry =>{
+      
+    })
+
+  });
+
+  res.on("error", function (error) {
+    console.error(error);
+  });
 });
+
+req.end();
